@@ -1,0 +1,147 @@
+/* ===== COLOR PALETTE =====
+Cream   : #F3E9DC
+Caramel : #C08552
+Coffee  : #895737
+Brownie : #5E3023
+=========================== */
+
+
+/* Page Background */
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: #F3E9DC;
+    /* Cream */
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Main Container */
+
+.container {
+    width: 85%;
+    margin: 30px auto;
+    background-color: #FFFFFF;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(94, 48, 35, 0.25);
+}
+
+
+/* Main Heading */
+
+h2 {
+    text-align: center;
+    color: #5E3023;
+    /* Brownie */
+    margin-bottom: 30px;
+}
+
+
+/* Section Cards */
+
+.section {
+    background-color: #F3E9DC;
+    /* Cream */
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    border-left: 8px solid #C08552;
+    /* Caramel */
+    box-shadow: 0 6px 15px rgba(137, 87, 55, 0.2);
+}
+
+
+/* Section Headings */
+
+h3 {
+    color: #895737;
+    /* Coffee */
+    margin-bottom: 15px;
+}
+
+
+/* Input Fields */
+
+input {
+    padding: 10px;
+    margin: 6px 4px;
+    width: 210px;
+    border-radius: 8px;
+    border: 1.5px solid #C08552;
+    outline: none;
+    transition: 0.3s;
+    background-color: #FFF;
+}
+
+input:focus {
+    border-color: #895737;
+    box-shadow: 0 0 8px rgba(137, 87, 55, 0.5);
+}
+
+
+/* Buttons */
+
+button {
+    padding: 10px 18px;
+    margin: 6px;
+    border: none;
+    border-radius: 10px;
+    background-color: #C08552;
+    /* Caramel */
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    transition: 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #895737;
+    /* Coffee */
+    transform: scale(1.07);
+    box-shadow: 0 6px 15px rgba(94, 48, 35, 0.4);
+}
+
+
+/* Table Styling */
+
+table {
+    width: 100%;
+    margin-top: 15px;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+th {
+    background-color: #5E3023;
+    /* Brownie */
+    color: #F3E9DC;
+    /* Cream */
+    padding: 12px;
+    text-align: center;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    background-color: #F3E9DC;
+    color: #5E3023;
+}
+
+tr:nth-child(even) td {
+    background-color: #E8D8C6;
+}
+
+
+/* Info Text */
+
+#searchResult,
+#count {
+    font-weight: bold;
+    color: #5E3023;
+    margin-top: 10px;
+    font-size: 16px;
+}

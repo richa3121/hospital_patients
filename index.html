@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hospital Patient Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>🏥 Hospital Patient Management System</h2>
+
+        <div class="section">
+            <h3>➕ Add Patient</h3>
+            <input id="id" placeholder="Patient ID">
+            <input id="name" placeholder="Name">
+            <input id="age" placeholder="Age">
+            <button onclick="addPatient()">Add</button>
+        </div>
+
+        <div class="section">
+            <h3>🔍 Search Patient</h3>
+            <input id="searchId" placeholder="Patient ID">
+            <button onclick="searchPatient()">Search</button>
+            <p id="searchResult"></p>
+        </div>
+
+        <div class="section">
+            <h3>📋 All Patients</h3>
+            <button onclick="loadPatients()">Display All</button>
+
+            <table id="table">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h3>🗑️ Delete Patient</h3>
+            <input id="deleteId" placeholder="Patient ID">
+            <button onclick="deletePatient()">Delete</button>
+        </div>
+
+        <div class="section">
+            <h3>📊 Total Patients</h3>
+            <button onclick="countPatients()">Count</button>
+            <p id="count"></p>
+        </div>
+
+    </div>
+
+    <script>
+        const api = "http://localhost:3000";
+
+        function addPatient() {
+            fetch(api + "/add", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id: id.value,
+                        name: name.value,
+                        age: age.value
+                    })
+                })
+                .then(res => res.json())
+                .then(data => alert(data.message));
+        }
+
+        function loadPatients() {
+            fetch(api + "/patients")
+                .then(res => res.json())
+                .then(data => {
+                    table.innerHTML =
+                        "<tr><th>ID</th><th>Name</th><th>Age</th></tr>";
+
+                    for (let p of data) {
+                        table.innerHTML +=
+                            `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.age}</td></tr>`;
+                    }
+                });
+        }
+
+        function searchPatient() {
+            fetch(api + "/search/" + searchId.value)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.message)
+                        searchResult.innerText = data.message;
+                    else
+                        searchResult.innerText =
+                        `ID: ${data.id}, Name: ${data.name}, Age: ${data.age}`;
+                });
+        }
+
+        function deletePatient() {
+            fetch(api + "/delete/" + deleteId.value, {
+                    method: "DELETE"
+                })
+                .then(res => res.json())
+                .then(data => alert(data.message));
+        }
+
+        function countPatients() {
+            fetch(api + "/count")
+                .then(res => res.json())
+                .then(data => {
+                    count.innerText = "Total Patients: " + data.total;
+                });
+        }
+    </script>
+
+</body>
+
+</html>
