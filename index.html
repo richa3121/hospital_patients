@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Hospital Patient Management</title>
+    <meta charset="UTF-8">
+    <title>Hospital Patient Management System</title>
+    <<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -11,7 +13,9 @@
     <div class="container">
 
         <h2>🏥 Hospital Patient Management System</h2>
+        <p style="text-align:center;">Live Demo using GitHub Pages</p>
 
+        <!-- Add Patient -->
         <div class="section">
             <h3>➕ Add Patient</h3>
             <input id="id" placeholder="Patient ID">
@@ -20,6 +24,7 @@
             <button onclick="addPatient()">Add</button>
         </div>
 
+        <!-- Search Patient -->
         <div class="section">
             <h3>🔍 Search Patient</h3>
             <input id="searchId" placeholder="Patient ID">
@@ -27,10 +32,10 @@
             <p id="searchResult"></p>
         </div>
 
+        <!-- Display Patients -->
         <div class="section">
             <h3>📋 All Patients</h3>
             <button onclick="loadPatients()">Display All</button>
-
             <table id="table">
                 <tr>
                     <th>ID</th>
@@ -40,12 +45,14 @@
             </table>
         </div>
 
+        <!-- Delete Patient -->
         <div class="section">
             <h3>🗑️ Delete Patient</h3>
             <input id="deleteId" placeholder="Patient ID">
             <button onclick="deletePatient()">Delete</button>
         </div>
 
+        <!-- Count -->
         <div class="section">
             <h3>📊 Total Patients</h3>
             <button onclick="countPatients()">Count</button>
@@ -55,68 +62,59 @@
     </div>
 
     <script>
+        // Backend API (public)
         const api = "https://hospital-backend-9ijl.onrender.com";
 
         function addPatient() {
             fetch(api + "/add", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        id: id.value,
-                        name: name.value,
-                        age: age.value
-                    })
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: id.value,
+                    name: name.value,
+                    age: age.value
                 })
-                .then(res => res.json())
-                .then(data => alert(data.message));
+            })
+            .then(r => r.json())
+            .then(d => alert(d.message));
         }
 
         function loadPatients() {
             fetch(api + "/patients")
-                .then(res => res.json())
-                .then(data => {
-                    table.innerHTML =
-                        "<tr><th>ID</th><th>Name</th><th>Age</th></tr>";
-
-                    for (let p of data) {
-                        table.innerHTML +=
-                            `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.age}</td></tr>`;
-                    }
+            .then(r => r.json())
+            .then(data => {
+                table.innerHTML =
+                    "<tr><th>ID</th><th>Name</th><th>Age</th></tr>";
+                data.forEach(p => {
+                    table.innerHTML +=
+                        `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.age}</td></tr>`;
                 });
+            });
         }
 
         function searchPatient() {
             fetch(api + "/search/" + searchId.value)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.message)
-                        searchResult.innerText = data.message;
-                    else
-                        searchResult.innerText =
-                        `ID: ${data.id}, Name: ${data.name}, Age: ${data.age}`;
-                });
+            .then(r => r.json())
+            .then(d => {
+                searchResult.innerText = d.message ?
+                    d.message :
+                    `ID: ${d.id}, Name: ${d.name}, Age: ${d.age}`;
+            });
         }
 
         function deletePatient() {
-            fetch(api + "/delete/" + deleteId.value, {
-                    method: "DELETE"
-                })
-                .then(res => res.json())
-                .then(data => alert(data.message));
+            fetch(api + "/delete/" + deleteId.value, { method: "DELETE" })
+            .then(r => r.json())
+            .then(d => alert(d.message));
         }
 
         function countPatients() {
             fetch(api + "/count")
-                .then(res => res.json())
-                .then(data => {
-                    count.innerText = "Total Patients: " + data.total;
-                });
+            .then(r => r.json())
+            .then(d => count.innerText = "Total Patients: " + d.total);
         }
     </script>
 
 </body>
-
-
 </html>
+
